@@ -1,0 +1,61 @@
+class HealthTracker:
+    def new_user(self, name, sex, year, weight, height):
+        self.steps,self.hour,self.minutes,self.seconds =[],[],[],[]
+        print("Name: {}".format(name))
+        print("Sex: {}".format(sex))
+        print("Age (years): {}".format(year))
+        print("Weight (Kg): {}".format(weight))
+        print("Height (cms): {}".format(height))
+        self.day = int(input("Enter the total number of days:\n"))
+        for i in range(self.day):
+            self.steps.append(int(input("Enter Steps:\n")))
+            workout_time_daily = input("Enter times in HH:MM:SS\n").split()
+            for time in workout_time_daily:
+                hour, minutes, sec = [int(i) for i in time.split(":")]
+                self.hour.append(hour)
+                self.minutes.append(minutes)
+                self.seconds.append(sec)
+        if self.hour != 0 and self.minutes != 0:
+            print("Hi Mr {}".format(name))
+        self.bmi = (weight / height / height) * 10000
+        if self.bmi <= 18.5:
+            print("Try to put some weight : {:.2f} ".format( self.bmi))
+        elif self.bmi > 18.6 and self.bmi <= 24.9:
+            print("You are a healthy person", self.bmi)
+        else:
+            print("you are suffering from Obseity", self.bmi)
+        self.kilometre_converted, self.hour_converted =[],[]
+        for i in self.steps:
+            self.kilometre_converted.append(i / 1312.33595801)
+        for j in self.minutes:
+            i = 0
+            a = j / 60
+            b = self.hour[i] + a
+            self.hour_converted.append(b)
+            i += 1
+        print("Your Weekly achievement is as follows: ")
+        if self.hour == 0 and self.minutes == 0:
+            self.speed()
+        else:
+            print("No breakout in Sessions: You get a 7/7 award ")
+            self.speed()
+        self.a, self.average = 0, 0
+        for j in self.kilometre_converted:
+            self.a += j
+            self.average = self.a / self.day
+        print("Your Weekly Average Speed is: {:.2f} Km/hr".format(self.average))
+        print("Your Weekly Average Distance is: {:.2f} Km ".format(sum(self.kilometre_converted))) 
+        
+    def speed(self):
+        self.fastest_speed = []
+        j = 0
+        for i in self.kilometre_converted:
+            self.fastest_speed.append(self.kilometre_converted[j] / self.hour_converted[j])
+            j += 1
+        print("Your Fastest Speed is: {:.2f} Km/hr ".format(max(self.fastest_speed)))
+        print("Your Longest Distance is: {:.2f} km ".format(max(self.kilometre_converted)))
+        print("Your Slowest Speed is: {:.2f} Km/hr ".format(min(self.fastest_speed)))
+        print("Your Shortest Distance is: {:.2f} Km ".format(min(self.kilometre_converted)))
+health_tracker_details= HealthTracker()
+health_tracker_details.new_user("xxx", "Male", 23, 70, 196)
+
